@@ -21,4 +21,11 @@ jobs:
       with:
         java-version: 1.8
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn package --file petclinic/pom.xml
+    - name: Run the application
+      run: java -jar petclinic/target/petclinic-2.2.2.BUILD-SNAPSHOT.jar
+    - name: Install dependencies
+      run: mvn --file petclinic-selenium/pom.xml -DskipTests install
+    - name: Run selenium tests
+      run: mvn -Dtest=PetclinicTest --file petclinic-selenium/pom.xml -Dbrowser=chrome -Dheadless=false test
+
